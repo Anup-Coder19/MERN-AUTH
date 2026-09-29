@@ -105,7 +105,7 @@ export const logout = (req, res)=>{
 //Controller to send Verification OTP to user's email
 export const sendVerifyOtp = async (req, res)=>{
     try {
-        const{userId} = req.body;
+        const userId = req.user.id;
         const user = await userModel.findById(userId);
 
         if(user.isAccountVerified)
@@ -135,7 +135,8 @@ export const sendVerifyOtp = async (req, res)=>{
 
 //Verify the Email using OTP
 export const verifyEmail = async (req, res)=>{
-    const{userId, otp} = req.body;
+    const{ otp} = req.body;
+    const userId = req.user.id;
 
     if(!userId || !otp)
     {
@@ -176,7 +177,7 @@ export const verifyEmail = async (req, res)=>{
 //To check whether any user is loggedin or not
 export const isAuthenticated = async (req, res)=>{
     try {
-      return  res.json({success: true, message: "User is already loggined "});
+      return res.json({success: true, message: "User is already loggined "});
     } catch (error) {
          return res.json({success: false, message: error.message});
     }
