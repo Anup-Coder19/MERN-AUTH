@@ -24,12 +24,12 @@ const Login = () => {
       if(state === 'Sign Up')
       {
         const {data} = await axios.post(`${backendUrl}/api/auth/register`, {name, email, password});
-
+        data.success && toast.success(data.message);
         if(data.success)
         {
           setIsLoggedin(true);
           getUserData();
-          navigate('/')
+          navigate('/');
         }else{
           toast.error(data.message);
         }
